@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import csv
 import pandas as pd
 import codecs
@@ -18,22 +19,16 @@ def OutFigure(X,Y,LabelX,LabelY,Title):
     FigureOption(LabelX,LabelY,Title)
     plt.show()
 
-#csvデータの取得
-def Input():
-    datas = pd.read_csv('stock/nikkei_stock_average_daily_jp.csv')
-    
-    #UniCodeError回避
-    with codecs.open("stock/nikkei_stock_average_daily_jp.csv", "r", "Shift-JIS", "ignore") as file:
-        datas = pd.read_table(file, delimiter=",")
+#指定列のcsvデータの取得
+def Input(NumColumns):
+    datas = pd.read_csv('stock/nikkei_stock_average_daily_jp.csv', index_col=0,usecols=[NumColumns])
     
     return datas
 
 
-
-stock_table=Input();
-
-print(stock_table)
-print(stock_table.size)
+#日付データの取得
+Date=Input(0)
+print(Date)
 
 PriceOp=2
 PriceCl=1
@@ -52,3 +47,16 @@ PriceLo=4
 # for data in stock_datas:
 #     plt.scatter(data[0], data[1],data[2])
 # plt.show()
+
+print("DATE")
+OutArray(Date)
+print("PRICE_CLOSE")
+OutArray(PriceCl)
+
+tags_array=["DATE","PriceClose","PriceOpen"]
+
+data_array=[]
+
+for i in range(3):
+    data_array[i]=Input(i)
+    OutArray(data_array[1])

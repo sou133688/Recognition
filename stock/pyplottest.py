@@ -4,6 +4,12 @@ import csv
 import pandas as pd
 import codecs
 
+#csvデータの取得
+def Input(NumColumns):
+    datas = pd.read_csv('stock/test.csv',usecols=[NumColumns])
+    return datas
+
+
 def FigureOption(LabelX,LabelY,Title):
     plt.title(Title)
     plt.xlabel(LabelX)
@@ -18,6 +24,9 @@ def OutFigure(X,Y,LabelX,LabelY,Title):
     FigureOption(LabelX,LabelY,Title)
     plt.show()
 
-x=[1,3,5]
-y=[2,4,6]
+x=Input(1)
+y=Input(2)
+print(x)
+print(y)
+
 OutFigure(x,y,"date","Price","Figure1")
