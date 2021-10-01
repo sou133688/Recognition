@@ -1,3 +1,5 @@
+#ボストンデータ価格のロード
+
 from sklearn.datasets import load_boston
 import pandas as pd
 from IPython.display import display
@@ -11,5 +13,9 @@ def load_data():
     df["MEDV"] = boston.target
     return df
 
+def Show(df):
+    display(df.head())
+    return 0
+
 df=load_data()    
-display(df.head())
+Show(df)
