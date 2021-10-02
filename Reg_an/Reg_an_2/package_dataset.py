@@ -1,11 +1,11 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from IPython.display import display
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import fetch_california_housing
-from IPython.display import display
-import matplotlib.pyplot as plt
-import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 #ボストン住宅価格データを読み込み、格納したデータフレームを返す
@@ -46,33 +46,42 @@ def prediction_test_simple():
     
     return Y_test_pred
 
+# 標準化された訓練データ,テストデータを返す
+def data_scale(array):    
+    scaler = StandardScaler()
+    array_scaled = scaler.fit_transform(array)
+
+    return array_scaled
+
+# 重回帰データを返す
+def multi_regression():
+    X_train, X_test, Y_train, Y_test = learn_data()
+    X_train_scaled = data_scale(X_train)
+
+    multi_reg = LinearRegression().fit(X_train_scaled, Y_train)
+    
+    return multi_reg
+
 # 重回帰訓練予測データを返す
 def prediction_train_multi():
     X_train, X_test, Y_train, Y_test = learn_data()
-    
-    multi_reg = LinearRegression().fit(X_train, Y_train)
-    Y_train_pred_multi = multi_reg.predict(X_train)
+    X_train_scaled = data_scale(X_train)
+
+    multi_reg = LinearRegression().fit(X_train_scaled, Y_train)
+    Y_train_pred_multi = multi_reg.predict(X_train_scaled)
     
     return Y_train_pred_multi
 
 # 重回帰テスト予測データを返す    
 def prediction_test_multi():
     X_train, X_test, Y_train, Y_test = learn_data()
+    X_train_scaled = data_scale(X_train)
+    X_test_scaled = data_scale(X_test)
     
-    multi_reg = LinearRegression().fit(X_train, Y_train)
-    Y_test_pred_multi = multi_reg.predict(X_test)
+    multi_reg = LinearRegression().fit(X_train_scaled, Y_train)
+    Y_test_pred_multi = multi_reg.predict(X_test_scaled)
     
     return Y_test_pred_multi
-
-
-def data_scale():
-    X_train, X_test, Y_train, Y_test = learn_data()
-    
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.fit_transform(X_test)
-
-    return X_train_scaled, X_test_scaled
 
 def out_score(mae,mse,rmse,r2):
     print(f"MAE = {mae}")
@@ -96,7 +105,12 @@ def get_eval_score(Y_true, Y_pred):
 
 
 
-X_train_scaled, X_test_scaled = data_scale()
+# X_train, X_test, Y_train, Y_test = learn_data()
+# X_train_scaled = data_scale(X_train)
+# X_test_scaled = data_scale(X_test)
+# multi_reg = LinearRegression().fit(X_train_scaled, Y_train)
+
+
 
 
 
