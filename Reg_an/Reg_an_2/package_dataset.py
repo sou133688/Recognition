@@ -1,11 +1,11 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from IPython.display import display
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import fetch_california_housing
-from IPython.display import display
-import matplotlib.pyplot as plt
-import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 #ボストン住宅価格データを読み込み、格納したデータフレームを返す
